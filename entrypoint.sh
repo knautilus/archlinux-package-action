@@ -5,11 +5,15 @@ set -e
 WORKPATH=$GITHUB_WORKSPACE/$INPUT_PATH
 HOME=/home/builder
 BASEDIR="$PWD"
+
+chmod -R a+rw .
+
 echo "::group::Copying files from $WORKPATH to $HOME/gh-action"
 # Set path permision
 cd $HOME
 mkdir gh-action
 cd gh-action
+chmod -R a+rw .
 cp -rfv "$GITHUB_WORKSPACE"/.git ./
 cp -fv "$WORKPATH"/PKGBUILD ./
 echo "::endgroup::"
