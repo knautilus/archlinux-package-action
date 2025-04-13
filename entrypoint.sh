@@ -4,6 +4,7 @@ set -e
 # Set path
 WORKPATH=$GITHUB_WORKSPACE/$INPUT_PATH
 HOME=/home/builder
+BASEDIR="$PWD"
 echo "::group::Copying files from $WORKPATH to $HOME/gh-action"
 # Set path permision
 cd $HOME
@@ -70,7 +71,27 @@ fi
 # Run makepkg
 if [[ -n $INPUT_FLAGS ]]; then
     echo "::group::Running makepkg with flags"
+
     makepkg $INPUT_FLAGS
+
+    # Get array of packages to be built
+    mapfile -t PKGFILES < <( makepkg --packagelist )
+    echo "Package(s): ${PKGFILES[*]}"
+    
+    # Report built package archives
+    i=0
+    for PKGFILE in "${PKGFILES[@]}"; do
+        # makepkg reports absolute paths, must be relative for use by other actions
+        RELPKGFILE="$(realpath --relative-base="$BASEDIR" "$PKGFILE")"
+        # Caller arguments to makepkg may mean the pacakge is not built
+        if [ -f "$PKGFILE" ]; then
+            echo "pkgfile$i=$RELPKGFILE" >> $GITHUB_OUTPUT
+        else
+            echo "Archive $RELPKGFILE not built"
+        fi
+        (( ++i ))
+    done
+
     echo "::endgroup::"
 fi
 
