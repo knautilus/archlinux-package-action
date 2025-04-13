@@ -11,7 +11,6 @@ echo "::group::Copying files from $WORKPATH to $HOME/gh-action"
 cd $HOME
 mkdir gh-action
 cd gh-action
-chmod -R a+rw ./
 cp -rfv "$GITHUB_WORKSPACE"/.git ./
 cp -fv "$WORKPATH"/PKGBUILD ./
 echo "::endgroup::"
@@ -79,7 +78,7 @@ if [[ -n $INPUT_FLAGS ]]; then
     # Get array of packages to be built
     mapfile -t PKGFILES < <( makepkg --packagelist )
     echo "Package(s): ${PKGFILES[*]}"
-    
+
     # Report built package archives
     i=0
     for PKGFILE in "${PKGFILES[@]}"; do
@@ -87,7 +86,7 @@ if [[ -n $INPUT_FLAGS ]]; then
         RELPKGFILE="$(realpath --relative-base="$BASEDIR" "$PKGFILE")"
         # Caller arguments to makepkg may mean the pacakge is not built
         if [ -f "$PKGFILE" ]; then
-            echo "pkgfile$i=$RELPKGFILE" >> $GITHUB_OUTPUT
+            sudo echo "pkgfile$i=$RELPKGFILE" >> $GITHUB_OUTPUT
         else
             echo "Archive $RELPKGFILE not built"
         fi
