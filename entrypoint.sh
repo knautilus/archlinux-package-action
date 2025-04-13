@@ -82,6 +82,6 @@ fi
 
 echo "::group::Copying files from $HOME/gh-action to $WORKPATH"
 
-sudo cp *.tar.xz "$WORKPATH"/
+sudo cp -v *.tar.xz "$WORKPATH"/
 
 echo "::endgroup::"
