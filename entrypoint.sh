@@ -76,8 +76,8 @@ if [[ -n $INPUT_FLAGS ]]; then
     makepkg $INPUT_FLAGS
 
     # Get array of packages to be built
-    mapfile -t PKGFILES < <( makepkg --packagelist )
-    echo "Package(s): ${PKGFILES[*]}"
+    #mapfile -t PKGFILES < <( makepkg --packagelist )
+    echo "Package(s): $(ls)"
 
     # Report built package archives
     #i=0
@@ -97,18 +97,16 @@ if [[ -n $INPUT_FLAGS ]]; then
 fi
 
 echo "::group::Copying files from $HOME/gh-action to $WORKPATH"
-for PKGFILE in "${PKGFILES[@]}"; do
-    # makepkg reports absolute paths, must be relative for use by other actions
-    RELPKGFILE="$(realpath --relative-base="$BASEDIR" "$PKGFILE")"
-    # Caller arguments to makepkg may mean the pacakge is not built
-    if [ -f "$PKGFILE" ]; then
-        sudo cp -fv $RELPKGFILE "$WORKPATH"/
-    else
-        echo "Archive $RELPKGFILE not built"
-    fi
-done
-sudo cp -fv PKGBUILD "$WORKPATH"/PKGBUILD
-if [[ -e .SRCINFO ]]; then
-    sudo cp -fv .SRCINFO "$WORKPATH"/.SRCINFO
-fi
+#for PKGFILE in "${PKGFILES[@]}"; do
+#    # makepkg reports absolute paths, must be relative for use by other actions
+#    RELPKGFILE="$(realpath --relative-base="$BASEDIR" "$PKGFILE")"
+#    # Caller arguments to makepkg may mean the pacakge is not built
+#    if [ -f "$PKGFILE" ]; then
+#        sudo cp -fv $RELPKGFILE "$WORKPATH"/
+#    else
+#        echo "Archive $RELPKGFILE not built"
+#    fi
+#done
+sudo cp -r * "$WORKPATH"/
+
 echo "::endgroup::"
