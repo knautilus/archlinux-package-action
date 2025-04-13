@@ -75,38 +75,13 @@ if [[ -n $INPUT_FLAGS ]]; then
 
     makepkg $INPUT_FLAGS
 
-    # Get array of packages to be built
-    #mapfile -t PKGFILES < <( makepkg --packagelist )
-    echo "Package(s): $(ls)"
-
-    # Report built package archives
-    #i=0
-    #for PKGFILE in "${PKGFILES[@]}"; do
-    #    # makepkg reports absolute paths, must be relative for use by other actions
-    #    RELPKGFILE="$(realpath --relative-base="$BASEDIR" "$PKGFILE")"
-    #    # Caller arguments to makepkg may mean the pacakge is not built
-    #    if [ -f "$PKGFILE" ]; then
-    #        sudo echo "pkgfile$i=$RELPKGFILE" >> $GITHUB_OUTPUT
-    #    else
-    #        echo "Archive $RELPKGFILE not built"
-    #    fi
-    #    (( ++i ))
-    #done
+    echo "Output files: $(ls)"
 
     echo "::endgroup::"
 fi
 
 echo "::group::Copying files from $HOME/gh-action to $WORKPATH"
-#for PKGFILE in "${PKGFILES[@]}"; do
-#    # makepkg reports absolute paths, must be relative for use by other actions
-#    RELPKGFILE="$(realpath --relative-base="$BASEDIR" "$PKGFILE")"
-#    # Caller arguments to makepkg may mean the pacakge is not built
-#    if [ -f "$PKGFILE" ]; then
-#        sudo cp -fv $RELPKGFILE "$WORKPATH"/
-#    else
-#        echo "Archive $RELPKGFILE not built"
-#    fi
-#done
-sudo cp -r * "$WORKPATH"/
+
+sudo cp *.tar.xz "$WORKPATH"/
 
 echo "::endgroup::"
