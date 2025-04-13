@@ -76,12 +76,13 @@ if [[ -n $INPUT_FLAGS ]]; then
     makepkg $INPUT_FLAGS
 
     echo "Output files: $(ls)"
+	echo "Output files pkg: $(ls) /pkg"
 
     echo "::endgroup::"
 fi
 
 echo "::group::Copying files from $HOME/gh-action to $WORKPATH"
 
-sudo cp -v *.tar.xz "$WORKPATH"/
+sudo cp -v pkg/. "$WORKPATH"/
 
 echo "::endgroup::"
