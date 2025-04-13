@@ -75,9 +75,6 @@ if [[ -n $INPUT_FLAGS ]]; then
 
     makepkg $INPUT_FLAGS
 
-    echo "Output files: $(ls)"
-	echo "Output files pkg: $(ls /pkg)"
-
     echo "::endgroup::"
 fi
 
