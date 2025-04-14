@@ -71,6 +71,12 @@ fi
 
 # Run makepkg
 if [[ -n $INPUT_FLAGS ]]; then
+    echo "::group::Cat makepkg"
+
+    cat /etc/makepkg.conf
+
+    echo "::endgroup::"
+
     echo "::group::Running makepkg with flags"
 
     makepkg $INPUT_FLAGS
