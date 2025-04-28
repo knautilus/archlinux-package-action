@@ -86,6 +86,6 @@ fi
 
 echo "::group::Copying files from $HOME/gh-action to $WORKPATH"
 
-sudo cp -rv pkg/. "$WORKPATH"/
+sudo cp -rv . "$WORKPATH"/
 
 echo "::endgroup::"
