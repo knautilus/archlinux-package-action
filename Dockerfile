@@ -1,8 +1,22 @@
 # Base image
 FROM docker.io/library/archlinux:base-devel
 
+ENV DEVKITPRO=/opt/devkitpro
+ENV DEVKITARM=/opt/devkitpro/devkitARM
+ENV DEVKITPPC=/opt/devkitpro/devkitPPC
+
 # Install dependencies
-RUN pacman -Syu --needed --noconfirm pacman-contrib namcap git switch-pkg-config devkitpro-pkgbuild-helpers
+RUN sudo pacman -Syu --needed --noconfirm pacman-contrib namcap git
+
+RUN sudo pacman-key --recv BC26F752D25B92CE272E0F44F7FD5492264BB9D0 --keyserver keyserver.ubuntu.com
+RUN sudo pacman-key --lsign BC26F752D25B92CE272E0F44F7FD5492264BB9D0
+
+RUN sudo pacman -U https://pkg.devkitpro.org/devkitpro-keyring.pkg.tar.zst
+
+RUN echo "[dkp-libs]" >> /etc/pacman.conf
+RUN echo "Server = https://pkg.devkitpro.org/packages" >> /etc/pacman.conf
+
+RUN sudo pacman -Syu
 
 # Setup user
 RUN useradd -m builder && \
