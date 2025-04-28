@@ -1,5 +1,5 @@
 # Base image
-FROM docker.io/library/archlinux:base-devel
+FROM devkitpro/devkita64
 
 # Install dependencies
 RUN pacman -Syu --needed --noconfirm pacman-contrib namcap git
