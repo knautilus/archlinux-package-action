@@ -19,6 +19,13 @@ RUN echo "Server = https://pkg.devkitpro.org/packages" >> /etc/pacman.conf
 
 RUN pacman -Syu
 
+RUN dkp-pacman -Syyu --noconfirm && \
+    dkp-pacman -S --needed --noconfirm switch-dev && \
+    dkp-pacman -S --needed --noconfirm switch-portlibs && \
+    dkp-pacman -S --needed --noconfirm devkitARM && \
+    dkp-pacman -S --needed --noconfirm dkp-toolchain-vars hactool && \
+    yes | dkp-pacman -Scc
+
 # Setup user
 RUN useradd -m builder && \
     echo 'builder ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
