@@ -1,8 +1,8 @@
 # Base image
-FROM devkitpro/devkita64
+FROM docker.io/library/archlinux:base-devel
 
 # Install dependencies
-RUN pacman -Syu --needed --noconfirm pacman-contrib namcap git
+RUN pacman -Syu --needed --noconfirm pacman-contrib namcap git switch-pkg-config devkitpro-pkgbuild-helpers
 
 # Setup user
 RUN useradd -m builder && \
