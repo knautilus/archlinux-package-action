@@ -12,7 +12,7 @@ RUN pacman-key --init
 RUN pacman-key --recv BC26F752D25B92CE272E0F44F7FD5492264BB9D0 --keyserver keyserver.ubuntu.com
 RUN pacman-key --lsign BC26F752D25B92CE272E0F44F7FD5492264BB9D0
 
-RUN pacman -U https://pkg.devkitpro.org/devkitpro-keyring.pkg.tar.zst
+RUN pacman -U --noconfirm https://pkg.devkitpro.org/devkitpro-keyring.pkg.tar.zst
 
 RUN echo "[dkp-libs]" >> /etc/pacman.conf
 RUN echo "Server = https://pkg.devkitpro.org/packages" >> /etc/pacman.conf
