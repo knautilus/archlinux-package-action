@@ -17,14 +17,12 @@ RUN pacman -U --noconfirm https://pkg.devkitpro.org/devkitpro-keyring.pkg.tar.zs
 RUN echo "[dkp-libs]" >> /etc/pacman.conf
 RUN echo "Server = https://pkg.devkitpro.org/packages" >> /etc/pacman.conf
 
-RUN pacman -Syu
-
-RUN dkp-pacman -Syyu --noconfirm && \
-    dkp-pacman -S --needed --noconfirm switch-dev && \
-    dkp-pacman -S --needed --noconfirm switch-portlibs && \
-    dkp-pacman -S --needed --noconfirm devkitARM && \
-    dkp-pacman -S --needed --noconfirm dkp-toolchain-vars hactool && \
-    yes | dkp-pacman -Scc
+RUN pacman -Syyu --noconfirm && \
+    pacman -S --needed --noconfirm switch-dev && \
+    pacman -S --needed --noconfirm switch-portlibs && \
+    pacman -S --needed --noconfirm devkitARM && \
+    pacman -S --needed --noconfirm dkp-toolchain-vars hactool && \
+    yes | pacman -Scc
 
 # Setup user
 RUN useradd -m builder && \
